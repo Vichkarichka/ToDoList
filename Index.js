@@ -3,49 +3,39 @@ import { ScrollView, View, StyleSheet } from 'react-native'
 import Header from "./Header";
 import InputTODO from "./InputTODO";
 import DisplayList from "./displayList";
-import { actionCreators } from './todoListRedux'
+import { add, remove } from './todoListRedux'
+import { connect } from 'react-redux';
 
-export default class Index extends React.Component {
+ class Index extends React.Component {
 
-    state = {};
+     onAddTodo = (text) => {
+        this.props.add(text);
+     };
 
-    componentWillMount() {
-
-        const {store} = this.props;
-        console.log(this.props);
-        const {todos} = store.getState();
-        this.setState({todos});
-
-        this.unsubscribe = store.subscribe(() => {
-            const {todos} = store.getState();
-            this.setState({todos})
-        })
-    }
-
-    componentWillUnmount() {
-        this.unsubscribe()
-    };
-
-    onAddTodo = (text) => {
-        const {store} = this.props;
-
-        store.dispatch(actionCreators.add(text));
-    };
-
-    removeItem = (item) => {
-        const {store} = this.props;
-
-        store.dispatch(actionCreators.remove(item))
-    };
+     removeItem = (index) => {
+        this.props.remove(index);
+     };
 
     render() {
         return (
             <View>
                 <Header header = "TO DO LIST"/>
                 <InputTODO onSubmitEditing={this.onAddTodo}/>
-                <DisplayList list = {this.state.todos} onRemoveTodo = {this.removeItem}/>
+                <DisplayList list = {this.props.todos} onRemoveTodo = {this.removeItem}/>
             </View>
         )
     }
 }
 
+const mapStateToProps = (state) => ({
+    todos: state.todos,
+});
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        add: (text) => dispatch(add(text)),
+        remove: (index) => dispatch(remove(index)),
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Index);

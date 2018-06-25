@@ -3,14 +3,19 @@ export const types = {
     REMOVE: 'REMOVE_TODO',
 };
 
-export const actionCreators = {
-    add: (item) => {
-        return {type: types.ADD, payload: item};
-    },
-    remove: (item) => {
-        return {type: types.REMOVE, payload: item};
+export function add(item) {
+    return {
+        type: types.ADD,
+        payload: item,
     }
-};
+}
+
+export function remove(item) {
+    return {
+        type: types.REMOVE,
+        payload: item,
+    }
+}
 
 const initialState = {
     todos: ['Click to remove', 'Learn React Native', 'Write Code', 'Ship Index'],

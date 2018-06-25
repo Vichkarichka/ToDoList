@@ -1,8 +1,14 @@
 {
   "expo": {
-    "sdkVersion": "27.0.0"
-  },
-  "packagerOpts": {
-    "nonPersistent": true
+    "name": "my Todo",
+    "description": "some description about our project",
+    "sdkVersion": "27.0.0",
+    "android": {
+      "package": "com.villy.mytodo",
+      "versionCode": 1
+    },
+    "packagerOpts": {
+      "nonPersistent": true
+    }
   }
 }

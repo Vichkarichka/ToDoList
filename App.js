@@ -1,44 +1,12 @@
-import React, { Component } from 'react'
-import { ScrollView, View, StyleSheet } from 'react-native'
-import Header from "./Header";
-import InputTODO from "./InputTODO";
-import DisplayList from "./displayList";
+import React, { Component } from 'react';
+import { createStore } from 'redux';
+import { reducer } from './todoListRedux'
 
-export default class App extends React.Component {
+const store = createStore(reducer);
 
-    constructor(props){
-        super(props);
-        this.state = {
-            text: '',
-            todos: ['Click to remove', 'Learn React Native', 'Write Code', 'Ship App'],
-        };
-    }
+import Index from './Index';
 
-    onAddTodo = (text) => {
-        const {todos} = this.state;
+const AppWithStore = () => <Index store={store} />;
 
-        this.setState({
-            todos: [text, ...todos],
-        });
-    };
 
-    removeItem = (item) => {
-      const {todos} = this.state;
-
-      this.setState({
-            todos: todos.filter((todo, i) => i !== item),
-      });
-
-    };
-
-    render() {
-        return (
-            <View>
-                <Header header = "TO DO LIST"/>
-                <InputTODO onSubmitEditing={this.onAddTodo}/>
-                <DisplayList list = {this.state.todos} onRemoveTodo = {this.removeItem}/>
-            </View>
-        )
-    }
-}
-
+export default AppWithStore;
